@@ -1,0 +1,87 @@
+--下载地址
+http://redis.io/
+http://www.redis.cn/
+
+需先安装gcc
+yum -y install gcc-c++
+--redis安装
+1：解压放入linux的opt目录
+tar -zxvf aaa.tar.gz
+2：进入目录安装
+make //如果报错执行make distclean后再make
+make install
+
+--修改redis.conf文件
+mkdir myredis
+再GENERAL下修改daemonize为yes
+
+--启动redis
+进入/usr/local/bin
+redis-server /myredis/redis.conf
+测试 
+redis-cli -p 63791
+or
+redis-cli -h 127.0.0.1 -p 6379 -a shuding4810
+--关闭
+shutdown
+exit
+ping
+
+--查看redis进程
+ps -ef|grep redis
+
+
+查看当前库大小 DBSIZE
+存值 set key value
+取值 get key
+选中库 select 0
+清空库 FLUSHDB
+清空所有库 FLUSHALL
+判断存在 exists key
+移动key至数据库 move key 2
+设置key过期时间(秒) expire key 10
+查看key时间(秒) ttl key   -1表示永不过期，-2表示已过期
+查看key类型 type key
+删除key del key
+
+
+
+命令大全：http://redisdoc.com
+redis的五大数据类型
+String
+List	(lpush/rpush/lrange)
+Set
+Hash
+Zset
+
+redis持久化
+RDB(Redis DataBase)
+AOF(Append Only File)
+
+redis事务
+discard		取消事务
+exec		提交事务
+multi		标记一个事务开始
+watch key	监视key
+unwatch key	取消监视key
+
+redis发布订阅
+
+redis的复制(master/Slave)
+slavof 主库IP 		主库端口 从库配置 
+slaveof no one		转成主库
+info replication	查看redis主从信息
+
+哨兵模式当主机挂了后从几自动转成主机
+
+1：自定义的/myredis目录下新建sentinel.conf文件
+sentinel monitor host6379(数据库名字可随便) 127.0.0.1 6379 1
+2：redis-sentinel /myredis/sentinel.conf 启动哨兵模式
+
+
+
+jedis
+
+
+
+

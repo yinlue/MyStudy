@@ -1,0 +1,59 @@
+# 官网https://www.docker.com
+# 托管于GitHub https://github.com/docker/docker
+# docker提供了一种打包、输送、运行任意应用的容器解决方案
+
+# 安装
+# linux安装 默认支持
+	# 安装命令
+	curl -fsSL https://get.docker.com | sh
+	# 查看docker版本
+	sudo docker version
+
+# 在window下需要安装docker-toolbox
+  下载地址：https://www.docker.com/products/docker-toolbox
+  
+# 在windows下安装docker
+	--https://github.com/boot2docker/boot2docker
+	下载docker-install.exe
+  
+  
+# Docker Client(客户端)
+
+# Docker Daemon(守护进程)
+
+# Docker Image(镜像)
+
+# Docker Container(容器)
+
+# Docker Registry(仓库)
+
+
+# 从网易峰巢下载镜像
+	网易峰巢地址：https://c.163.com/hub#/m/home/
+	docker pull hub.c.163.com/library/nginx:latest
+	docker pull hub.c.163.com/library/tomcat:latest
+	docker pull hub.c.163.com/library/mysql:latest
+
+	运行mysql
+		docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=000000 -e MYSQL_DATABASE=jpress 镜像名称
+
+# 进入docker容器内部
+	docker exec -it 容器ID bash
+
+# 查看Nginx端口状态
+	netstat -na|grep 8080
+
+# docker运行指定端口
+	docker run -d -p 8080:80 镜像名
+	or
+	docker run -d -P 镜像名
+
+# 制作自己的镜像
+	编辑Dockerfile
+		from hub.c.163.com/library/tomcat
+		MAINTAINER YL XXX@163.com
+		copy jpress.war /usr/local/tomcat/webapps
+	docker build
+		docker build -t jpress:latest .
+		.代表当前目录的Dockerfile文件
+	jpress:http://jpress.io

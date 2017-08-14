@@ -1,0 +1,90 @@
+# explain执行计划分析
+
+# id
+	id相同按顺序执行，不同时id越大越优先执行
+
+# select_type：
+	simple		简单的select查询，查询中不包含子查询或union
+	primary		查询中若包含复杂的子部分，最外层查询则被标识为	
+	subquery	在select或where列表中包含了子查询
+	derived		在from列表中包含的子查询(衍生)即虚表，结果会放在临时表里
+	union		若第二个select出现在union之后，则被标记为unin
+			若union包含在from子句的子查询中，外层select将被标记为derived
+	union result	从union表获取结果的select
+
+# table	显示这一行数据是哪张表的
+ 
+#  type	显示查询使用了何种类型
+	从最好到最差依次是：system>const>eq_ref>ref>range>index>all
+	all	全表扫描
+	index 	只遍历索引树
+	range	只检索给定范围的行（between, < ,> ,in），使用一个索引来选择行,比全表扫描好
+	ref	非唯一性索引扫描，返回匹配某个单值的所有行，属于查找和扫描的混合体
+	eq_ref	唯一性索引扫描，对于每个索引键，表中只有一条记录匹配常用于主键或唯一索引扫描
+	system	表只有一行记录（系统表），平时不会出现可以忽略不计
+	const	const用于比较主键或者唯一锁引，因为只匹配一条数据所以很快 
+	null
+
+# possible_keys	显示可能应用在这张表中的索引，一个或多个
+# key		实际使用的索引，如果为NULL则没有使用索引
+# key_len	表示索引中使用的字节数长度越短越好
+
+# ref		显示索引的哪一列被使用了，如果可能的话是一个常数。哪些列或常量被用于查找索引
+		列上的值
+
+# rows		估算大至所需要读取的行
+
+# extra		重要的额外信息
+	using filesort	说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行
+			读取。mysql中无法利用索引完成的排序操作称为"文件排序"
+	using temporary	使用了临时表保存中间结果，Mysqld在对查询结果排序时使用临时表。常见于
+			排序和分组查询
+	using index	效率不错
+	using join buffer 使用了连接缓存
+
+# 如何避免锁引失效
+	1：全值匹配
+	2：最佳左前缀法则
+	3：不在索引列上做任何操作(计算，函数。。。)
+	4：存储引擎不能使用索引中范围条件右边的列
+	5：尽量使用覆盖索引(只查询索引列)减少 select *
+	6：mysql在使用不等于的时候无法使用索引
+	7：is null,is not null无法使用索引
+	8：like以通配符开头
+	9：字符串不加单引号
+	10：少用or
+
+# in和exists
+	子查询结果集大于外层exists
+	子查询结果集小于外层in
+
+# 慢查询(一般不建议开启 )
+	1：long_query_time=设定值,使用show variables like 'long_query_time%'查询，
+	   使用set global long_query_time=3设置慢查询阀值(单位秒)
+	2：查询慢查询状态：show variables like '%slow_query_log%';
+	3：使用set global slow_query_log=1;开启，只对当前数据库有效重启后失效
+	4：使用show global status like '%Slow_queries%'查看慢查询记录数
+	5：日志分析工具mysqldumpslow
+		s：按何种方式排序
+		c：坊问次数
+		l：锁定时间
+		r：返回记录
+		t：查询时间
+		al：平均锁时间
+		ar：平均返回记录数
+		at：平均查询时间
+		t：返回前面多少条数据
+		g：后边搭配一个正则，不区分大小写
+		例如：得到返回记录最多的10个SQL
+		mysqldumpslow -s r -t 10 /var/lib/mysql/linux01-slow.log
+
+# 批次脚本插入
+	1：如果创建函数报错需要开启以下参数
+		show variables like 'log_bin_trust_function_creators';
+		set global log_bin_trust_function_creators=1;
+		或在my.cnf[mysqld]加上log_bin_trust_function_creators=1永久生效  
+
+
+
+
+

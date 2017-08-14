@@ -1,0 +1,49 @@
+1、从官网（http://www.nginx.org）下载最新的Nginx并解压
+
+2、安装插件包
+yum install -y gcc
+or
+yum -y install gcc gcc-c++ autoconf automake
+
+yum install -y pcre pcre-devel  
+yum install -y zlib zlib-devel  
+--可不装
+yum install -y openssl openssl-devel 
+
+
+3、安装
+--进入nginx目录
+./configure --prefix=/usr/local/nginx
+make
+make install
+
+4、启动
+--进入/usr/local/nginx/sbin
+./nginx
+or ./nginx -c ../nginx.conf
+5、停止
+./nginx -s stop
+6、重启
+./nginx -t
+
+--查看nginx进程
+ps -ef|grep nginx
+--杀死进程
+kill -TERM 2132
+
+
+负载均衡配置
+
+--单机配置
+location
+{
+	proxy_pass http://192.168.80.129:8080
+}
+
+--多台tomcat配置
+upstream localhost{
+	server 192.168.80.129;8080 weight=6;
+	server 192.168.80.129:8081 weight=5;
+}
+
+

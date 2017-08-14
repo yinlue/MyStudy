@@ -1,0 +1,5 @@
+--hadoop命令运行jar
+hadoop jar temp.jar com.dajiangtao.类名 /weather/ /werather/out
+
+--查看运行结果
+hadoop fs -text /weather/out/part-r-000000
