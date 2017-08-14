@@ -1,7 +1,0 @@
---配置常用命令到linux bin
-vi /etc/profile
-
---查看hdfs文件
-hdfs dfs -ls /
---hdfs上传文件
-hdfs dfs -put 文件 /

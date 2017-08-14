@@ -1,7 +1,0 @@
-# 文本
-	--文本装饰
-	text-decoration
-	--文本对其
-	text-align
-	--文本缩径
-	text-indent

@@ -1,5 +1,0 @@
---下载eclipse hadoop插件
-hadoop.f.dajiangtai.com/hadoop2.2/hadoop-eclipse-plugin-2.2.0.jar
---配置hadoop环境变量
-HADOOP_HOME=E:\utils\hadoop\hadoop-2.2.0
-PATH=%HADOOP_HOME%\bin;
