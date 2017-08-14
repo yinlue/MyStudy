@@ -1,0 +1,3 @@
+rpm和DPKG
+--安装JDK
+rpm -ivh jdk文件

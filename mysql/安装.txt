@@ -1,0 +1,79 @@
+安装分为yum源码安装和rpm安装
+--查看是否有安装
+yum -y remove mysql-libs.x86_64
+
+--卸载已安装的mysql
+yum -y remove mysql-libs.x86_64
+
+--rpm安装
+
+--检查是否有安装过mysql
+rpm -qa|grep -i mysql
+
+--安装
+rpm -ivh server和client
+如果报错时则先安装	yum install -y libaio	yum install -y perl
+
+--查看是否安装成功
+cat /etc/passwd|grep mysql
+cat /etc/group|grep mysql
+mysqladmin --version
+
+--创建mysql用户和用户组
+
+--启动mysql
+service mysql start
+service mysql stop
+
+--修改root默认密码
+/usr/bin/mysqladmin -u root password 123456
+如果报错先停掉服务
+mysqld_safe --skip-grant-tables &
+mysql -uroot -p 回车进入
+use mysql;
+update user set password=PASSWORD("123456") where user="root";
+flush privileges; 更新权限
+quit 退出
+service mysql restart
+mysql -uroot -p新密码进入
+--如果还提示需要设置密码
+mysql> set password=PASSWORD('123456');
+
+--修改配置文件路径
+进入/usr/share/mysql下复制 cp my-default.cnf /etc/my.cnf
+--查看字符集
+show variables like '%char%';
+
+--修改mysql不限制链接
+use mysql;
+update user set host='%' where host='localhost';
+
+--开启自动服务
+chkconfig mysql on
+--查看
+chkconfig --list | grep mysql
+--查看
+cat /etc/inittab
+ntsysv
+
+--mysql相关目录
+/var/lib/mysql		mysql数据库文件的存放路径
+/usr/share/mysql	配置文件目录
+/usr/bin		相关命令目录
+/etc/init.d/mysql	启停相关脚本
+
+--mysql数据文件
+二进制日志 log-bin	用于主从复制
+错误日志 log-error	记录错误信息
+frm	存放表结构
+myd	存放表数据
+myi	存放表索引
+
+--查看mysql默认存储引擎
+show engines;
+show variables like '%storage_engine%';
+
+
+
+
+

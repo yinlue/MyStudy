@@ -1,0 +1,28 @@
+# 基本配置
+
+# 虚拟主机配置
+	--IP地址配置
+	ifconfig eth0:1 192.168.1.109 broadcast 192.168.1.255 netmask 255.255.255.0
+	--nginx的虚拟主机配置
+	1：新建xnzj.conf
+		user nobody;
+		worker_processes 2;
+		events{
+			worker_connections 1024;
+		}
+		http{
+			server{
+				listen 191...:80;
+				server_name 192;
+				
+			}
+			server{
+			
+			}
+		}
+	
+	
+	
+	
+	
+	

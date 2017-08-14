@@ -1,0 +1,4 @@
+OpenStack
+
+--查看SQL执行计划
+explain sql \G

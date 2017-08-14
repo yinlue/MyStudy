@@ -1,0 +1,77 @@
+# git基本命令
+	1：配置git用户信息(git config)
+		git config --global user.name XXX
+		git config --global user.email XXX@qq.com
+		git config --list
+	2：查看提交信息
+		git log
+		or 
+		git log --oneline
+	3：查看文本状态信息
+		git status
+	4：git中文件的4种状态
+		untracked	未被追踪
+		modified	修改
+		staged		添加到了暂存区但未提交版本库
+		committed 	安全的存储本地库中
+	5：git的3层结构
+		work directory	工作区
+		staging index	暂存区
+		git directory	版本库
+
+# git撤消操作
+	git commit -am ''		跳过暂存区直接提交至版本库
+	git commit --amend		撤消上一次提交并提交当前
+	
+	# 还原工作区
+		git checkout -- filename.html	还原服务器版本
+		git checkout -- .				还原所有服务器版本
+	# 还原暂存区
+		git reset HEAD filename.html
+
+# git分支
+	基本命令
+		git branch						查看分支
+		git branch mmm					创建分支
+		git branch -m oldname newname 	修改分支名称
+		git checkout branchname			切换分支
+		git branch -D branchname		删除分支
+	合并
+		git merge 分支名		合并之前需要先切换到master分支
+		
+		git diff				比较工作区与暂存区的差异
+		git diff --staged		比较暂存区与版本库的差异
+		git diff 版本号 版本号	比较分支内的两个版本差异
+		git diff 分支 分支		比较两个分支的最新提交版本的差异
+		
+	储存变更
+		git stash					封存当前内容
+		git stash list				查看封存区
+		git stash apply stash@num	还原封存区内容
+		git stash drop stash@num	删除封存区内容
+		git stash pop stash@num		还原并删除封存区"{0}"
+	
+# 远程仓库
+	--推送本地仓库至远程仓库
+		git push url master
+	--拉取远程仓库
+		git pull url master
+		
+# 远程仓库搭建
+	git init --bare 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
